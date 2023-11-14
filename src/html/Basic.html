@@ -15,6 +15,7 @@
     <!--内部样式表，用于控制单个文件的样式,比如该文件中所有段落标签的样式-->
     <style type="text/css">
        p {color:red}
+
     </style>
 
     <!--外部样式表，用于控制多个文件的样式，比如所有html文件中的段落标签的样式-->
@@ -35,31 +36,115 @@
 <p>
     这是一个段落
 </p>
+
 <p>这是第二个段落，内部包含换行标签<br/>这是第二行</p>
+
 <!--水平线标签-->
 <p>这里是利用水平线标签展示一个水平线</p>
 <hr/>
 
 <!--链接标签 其中href是标签中的属性-->
-<a href="https://www.baidu.comssss" target="_blank" title="点击跳转" rel="appendix" style="text-decoration: none">百度</a>
+<a href="https://www.baidu.com" target="_blank" title="点击跳转" rel="appendix" style="text-decoration: none">百度</a>
 <!--图片链接-->
 <a href="https://www.baidu.com">
     <img src="baidu_logo.png" width="50" height="20"/>
 </a>
 <!--同一页面的锚点链接-->
-<a href="#页面结尾">同一页面的锚点链接</a>
+<a href="#页面结尾">同一页面的锚点链接,点击跳转到页面结尾</a>
 
 <!--换行标签 也是一个空元素 即标签中没有内容的标签  空元素标签在起始标签中关闭-->
 <br/>
 
-<!--图片标签-->
-<img src="search_img.webp" width="50" height="50"/>
+<!--图片标签 宽高设置的数值是像素 usemap可以用于设置图片的图像映射-->
+<img src="search_img.webp" alt="alt属性是为了当图片展示不出来时展示的文案" width="50" height="50" usemap="#clickmap"/>
+
+<!--图像映射 是指在源图像上设置了点击范围的图像 点击图片后跳转的链接-->
+<map id="clickmap" name="clickmap">
+    <area shape="circle" coords="25, 25, 5" href="https://www.baidu.com" alt="点击区域">
+</map>
 
 <p>HTML可以对文本进行格式化控制，比如<b>粗体</b>、<i>斜体</i>、上标<sup>上标</sup>、下标<sub>下标，和一些其他的文本样式</sub></p>
 
 <!--CSS内联样式：作为标签属性实现的CSS样式-->
-<p style="color:blue;margin-left:20px">这是一个使用了style样式属性的段落, 内联CSS样式覆盖了内部样式表</p>
+<p style="color:blue;margin-left:20px">这是一个使用了style样式属性的段落, 内联CSS样式优先级最高</p>
 
-<a name="#页面结尾"></a>
+<!--表格标签 有标题(caption)、表头(th)、表行(tr) 单元格数据(td) 等可以通过CSS设置样式-->
+<table>
+    <caption>
+        这是一个表格的标题
+    </caption>
+    <thead>
+    <tr>
+        <th>表头1</th>
+        <th>表头2</th>
+        <th>表头3</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>第一行第一列</td>
+        <td>第一行第二列</td>
+        <td>第一行第三列</td>
+    </tr>
+    <tr>
+        <td>第二行第一列</td>
+        <td>第二行第二列</td>
+        <td>第二行第三列</td>
+    </tr>
+    </tbody>
+</table>
+
+<!--列表标签 可以分为有序标签和无需标签-->
+<ol start="1">
+    <li>第一个列表项</li>
+    <li>第二个列表项</li>
+    <li>第三个列表项</li>
+    <li>第四个列表项,包含一个无序列表
+        <ul>
+            <li>第一个列表项</li>
+            <li>第二个列表项</li>
+            <li>第三个列表项</li>
+        </ul>
+    </li>
+</ol>
+
+<!--块级元素 用于组合其他元素为一个整体,dvi前后会自动插入换行符，结合使用CSS控制该快内的整体样式, 如果已经设置了外部样式表或者内部样式表 style属性会失效-->
+<div style="color:yellow">
+    <p>div是一个块级元素，用于将一些元素组合成块,成为一个区域，vi前后会自动插入换行符，结合使用CSS控制该快内的整体样式</p>
+</div>
+
+<!--span用于对行内元素进行组合控制，主要对文本进行单独的样式控制-->
+<p>使用span可以对行内元素进行组合控制,只有span元素应用了样式后才会产生效果，<span>【这句话没有设置样式】</span>，<span style="color:blue">【这句话就设置了样式】</span></p>
+
+<!--表单元素: 表单是允许用户输入数据并通过提交按钮提交到服务器 action用于指定信息提交的地址，method用指定信息提交方式-->
+<!--get方式会将表单中的信息以参数的形式拼接在地址后面 https://www.baidu.com/?username=sss&password=ssss&devicename=sss-->
+<!--post方式会将表单中的信息放在请求体中-->
+<form action="https://www.baidu.com" method="post">
+    <fieldset> <!--对表单内的元素进行分组，并提供设置可选的标题-->
+        <legend>用户信息输入</legend><!--该分组内的标题-->
+        <input type="text" name="username" placeholder="请输入用户名"/><br/>
+        <input type="password" name="password" placeholder="<PASSWORD>"/>
+    </fieldset>
+    <fieldset> <!--对表单内的元素进行分组，并提供设置可选的标题-->
+        <legend>设备信息输入</legend><!--该分组内的标题-->
+        <input type="text" name="devicename" placeholder="请输入设备名"/><br/>
+    </fieldset>
+    <input type="submit" value="提交按钮"/>
+</form>
+<br/>
+<!--iframe标签 用于在页面中嵌入其他网页-->
+<p>iframe标签 用于在页面中嵌入其他网页,但是注意有些网站设置了不希望自己呗嵌入到其他网页</p>
+<iframe src="https://juejin.cn" width="500" height="500" frameborder="0">
+</iframe>
+
+<p>脚本标签用于定义脚本</p>
+<script>
+    function clickEvent() {
+        alert("点击了按钮")
+    }
+</script>
+<button onclick="clickEvent()">点击按钮执行脚本</button>
+
+<br/><a name="页面结尾">页面结尾</a>
 </body>
 </html>

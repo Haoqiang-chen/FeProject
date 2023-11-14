@@ -1,3 +1,16 @@
 p {
     color: gray
 }
+table {
+            border-collapse: collapse;
+            width: 50%; /* 设置表格宽度为页面宽度的50% */
+        }
+
+        table, th, td {
+            border: 1px solid black; /* 添加边框 */
+        }
+
+        th, td {
+            padding: 10px; /* 添加单元格内边距，使内容更美观 */
+            text-align: center; /* 文本居中对齐 */
+        }
