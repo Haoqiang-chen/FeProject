@@ -13,7 +13,22 @@
 <p id="text2">这个是最初展示的文案</p>
 <button id="btn2" onclick="clickToGrammar('text2')">点击测试js的基础语法</button>
 
+<hr/>
+<form name="testForm" action="https://www.baidu.com" method="get" onsubmit="checkForm()">
+    <fieldset>
+        <legend>测试javaScript验证表单信息</legend>
+        <input type="number" name="num" placeholder="请输出入0-10范围内数字"/>
+    </fieldset>
+    <input type="submit" value="提交按钮"/>
+</form>
 
+<hr/>
+<button id="btn3" onclick="asyncRequest('asyncRequest')">点击测试异步请求</button>
+<p id="asyncRequest"></p>
+
+<hr/>
+<button id="btn4" onclick="asyncRequestByPromise('asyncRequestByPromise')">点击测试Promise异步请求</button>
+<p id="asyncRequestByPromise"></p>
 <script src = "basic.js"></script>
 </body>
 </html>
