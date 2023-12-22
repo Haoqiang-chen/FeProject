@@ -4,22 +4,22 @@
 function baseDataType() {
     // 字符串
     let a = 1, b = 2;
-    let resultStr = `字符串是可以实现插值的，比如a+b=${a + b}`
-    console.log(resultStr)
+    let resultStr = `字符串是可以实现插值的，比如a+b=${a + b}`;
+    console.log(resultStr);
 
     // Symbol（符号）类型
-    let sym = Symbol()
-    let sym1 = Symbol()
-    console.log(typeof sym)
-    console.log(sym === sym1)
-    let symByDesc = Symbol("描述")
+    let sym = Symbol();
+    let sym1 = Symbol();
+    console.log(typeof sym);
+    console.log(sym === sym1);
+    let symByDesc = Symbol("描述");
 
     // Object对象类型，Object也是派生其他类型的基类
-    let object = new Object()  // 等价与直接 {}
-    console.log("对象构造函数：" + object.constructor)
-    console.log("判断对象是否有某个属性：" + object.hasOwnProperty("propertyName"))
-    console.log("对象的字符串表示：" + object.toLocaleString())
-    console.log("对象的字符串表示：" + object.valueOf())
+    let object = new Object();  // 等价与直接 {}
+    console.log("对象构造函数：" + object.constructor);
+    console.log("判断对象是否有某个属性：" + object.hasOwnProperty("propertyName"));
+    console.log("对象的字符串表示：" + object.toLocaleString());
+    console.log("对象的字符串表示：" + object.valueOf());
 
 }
 
@@ -28,8 +28,8 @@ function baseDataType() {
  */
 function baseReferenceType() {
     // 时间类型
-    let date = new Date()
-    console.log(date.toDateString())
+    let date = new Date();
+    console.log(date.toDateString());
 
     // String、Number、Boolean对象
     // 当时用字符串、数值、布尔的字面量时，其实都会在后台创建一个对应的包装器类型，然后用完包装器类型对象就会销毁
@@ -37,11 +37,48 @@ function baseReferenceType() {
     // let str = new String("This is a Str")
     // let str1 = str.substring(5)
     // str = null
-    let str = "This is a Str"
-    let str1 = str.substring(5)
-    console.log(str1)
+    let str = "This is a Str";
+    let str1 = str.substring(5);
+    console.log(str1);
 
     // 内置对象
+
+}
+
+/**
+ * 对象的基础概念
+ */
+function baseObject() {
+    // 创建对象的方式：（1）直接用new关键字创建Object对象  (2)用对象字面量来实现
+    let newObject = new Object();
+    newObject.name = "object";
+    let newObject1 = {name: "object1"};
+    // 对象中属性分为两种类型：数据属性 和 访问器属性，每种类型的属性中都包含一些内部特性，一个对象中的属性要么是数据属性 要么是访问器属性
+    // 定义对象属性并读取所有属性的特性描述
+    let objectProperty = {};
+    Object.defineProperties(objectProperty, {
+        property1_: {
+            value: "第一个属性，私有的",
+            enumerable: true
+        },
+        property2: {
+            value: "第二个属性",
+            writable: true
+        },
+        property3: {
+            get: function () {
+                console.log(this);
+                return this.property1_;
+            },
+            set: function (value) {
+                console.log(this);
+                this.property2 = value;
+            }
+        }
+    });
+    console.log(Object.getOwnPropertyDescriptors(objectProperty));
+    objectProperty.property3 = "设置数据"
+    console.log(Object.getOwnPropertyDescriptors(objectProperty));
 
 }
 
@@ -134,3 +171,48 @@ let consObject = new ConstructorFunc()
 // console.log(consObject.selfFunc())
 console.log(consObject.protoTypeFunc());
 console.log(consObject.name);  // 没有查找到该属性
+
+/**
+ * 利用原型模式实现继承
+ */
+function SuperType() {
+    this.superVal = "superVal";
+}
+
+SuperType.prototype.superFun = function() {
+    console.log("superFun");
+}
+
+function ChildType() {
+    // 继承父类的属性
+    SuperType.call(this);
+    // 扩展子类的属性
+    this.childVal = "superVal";
+}
+
+// 继承父类的原型
+inheritProtoType(ChildType, SuperType);
+
+// ChildType.prototype = SuperType
+// 扩展子类方法
+ChildType.prototype.childFun = function() {
+    console.log("childFun");
+}
+
+let childInstance = new ChildType();
+console.log(childInstance);
+
+
+
+
+function object(o) {
+    function F() {};
+    F.prototype = o;
+    return new F();
+}
+
+function inheritProtoType(childType, superType) {
+    let cloneSuperProtoType = object(superType.prototype);
+    cloneSuperProtoType.constructor = superType;
+    childType.prototype = cloneSuperProtoType;
+}
