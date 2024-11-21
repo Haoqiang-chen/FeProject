@@ -179,6 +179,9 @@ function SuperType() {
     this.superVal = "superVal";
 }
 
+/**
+ * 在SuperType的原型对象上定义方法
+ */
 SuperType.prototype.superFun = function() {
     console.log("superFun");
 }
@@ -194,7 +197,7 @@ function ChildType() {
 inheritProtoType(ChildType, SuperType);
 
 // ChildType.prototype = SuperType
-// 扩展子类方法
+// 在ChildType中的原型对象上定义方法
 ChildType.prototype.childFun = function() {
     console.log("childFun");
 }
@@ -214,5 +217,6 @@ function object(o) {
 function inheritProtoType(childType, superType) {
     let cloneSuperProtoType = object(superType.prototype);
     cloneSuperProtoType.constructor = superType;
+    // 将childType的原型对象定义为一个新对象
     childType.prototype = cloneSuperProtoType;
 }
